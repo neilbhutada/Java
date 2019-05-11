@@ -1,0 +1,466 @@
+import java.awt.EventQueue;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
+import javax.swing.JFrame;
+
+
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
+import java.awt.event.ActionEvent;
+import javax.swing.JLabel;
+import javax.swing.JRadioButton;
+import java.awt.Font;
+import java.awt.Color;
+import javax.swing.JTextPane;
+
+import org.apache.commons.io.FileUtils;
+
+import javax.swing.JTextField;
+import java.awt.Desktop;
+
+import java.util.Random;
+public class Billing {
+
+	private JFrame frame;
+	private JTextField textField;
+private ButtonGroup bg = new ButtonGroup();
+private ButtonGroup bg1 = new ButtonGroup();
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Billing window = new Billing();
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the application.
+	 */
+	public Billing() {
+		initialize();
+	}
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+		frame = new JFrame();
+		frame.getContentPane().setFont(new Font("Tahoma", Font.PLAIN, 18));
+		frame.setBounds(100, 100, 1212, 716);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
+		JRadioButton r1 = new JRadioButton("Undergraduate ");
+		r1.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		r1.setBounds(45, 172, 160, 25);
+		frame.getContentPane().add(r1);
+		
+		JRadioButton r2 = new JRadioButton("Graduate ");
+		r2.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		r2.setBounds(45, 214, 127, 25);
+		frame.getContentPane().add(r2);
+		
+		JRadioButton r3 = new JRadioButton("Phd");
+		r3.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		r3.setBounds(45, 256, 127, 25);
+		frame.getContentPane().add(r3);
+		
+		JRadioButton r11 = new JRadioButton("Public");
+		r11.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		r11.setBounds(228, 174, 127, 25);
+		frame.getContentPane().add(r11);
+		
+		JRadioButton r12 = new JRadioButton("Private Non-Profit");
+		r12.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		r12.setBounds(228, 216, 172, 25);
+		frame.getContentPane().add(r12);
+		
+		JRadioButton r13 = new JRadioButton("Private for Profit");
+		r13.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		r13.setBounds(228, 258, 172, 25);
+		frame.getContentPane().add(r13);
+		bg.add(r1);
+		bg.add(r2);
+		bg.add(r3);
+		bg1.add(r11);
+		bg1.add(r12);
+		bg1.add(r13);
+
+		JTextPane textPane_1 = new JTextPane();
+		textPane_1.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		textPane_1.setEditable(false);
+		textPane_1.setBounds(239, 393, 230, 86);
+		frame.getContentPane().add(textPane_1);
+		JTextPane textPane = new JTextPane();
+		textPane.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		textPane.setBounds(210, 333, 172, 40);
+		frame.getContentPane().add(textPane);
+		JTextPane textPane_2 = new JTextPane();
+		textPane_2.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		textPane_2.setEditable(false);
+		textPane_2.setBounds(228, 492, 172, 35);
+		frame.getContentPane().add(textPane_2);
+		JButton btnNewButton = new JButton("Calculate ");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				int ai = Integer.parseInt(textPane.getText());
+				if(r1.isSelected()&&r11.isSelected())
+				{
+					if(ai<600000)
+				{
+					textPane_1.setText("Cannot get German visa");
+					return;
+				}
+					else
+					{
+					textPane_1.setText("0");
+					}
+				}
+				
+				
+				if(r1.isSelected()&&r12.isSelected())
+				{
+					if(ai>=600000&&ai<1200000)
+					{
+						
+					textPane_1.setText(""+200000*0.5);
+					}
+					if(ai<600000)
+					{
+						textPane_1.setText("Cannot get German visa");
+						return;
+					}
+					if(ai>1200000&&ai<=2400000)
+					{
+						textPane_1.setText(""+200000*0.75);
+					}
+					if(ai>2400000)
+					{
+						textPane_1.setText(""+200000);
+					}
+				}
+				if(r1.isSelected()&&r13.isSelected())
+				{
+					if(ai>=600000&&ai<1200000)
+					{
+						
+					textPane_1.setText(""+600000*0.7);
+					}
+					if(ai<600000)
+					{
+						textPane_1.setText("Cannot get German visa");
+						return;
+					}
+					if(ai>1200000&&ai<=2400000)
+					{
+						textPane_1.setText(""+600000*0.9);
+					}
+					if(ai>2400000)
+					{
+						textPane_1.setText(""+600000);
+					}
+				}
+				if(r2.isSelected()&&r11.isSelected())
+				{
+					if(ai<600000)
+					{
+						textPane_1.setText("Cannot get German visa");
+						return;
+					}
+						else
+						{
+						textPane_1.setText("0");
+						}
+				}
+				if(r2.isSelected()&&r12.isSelected())
+				{
+					if(ai>=600000&&ai<1200000)
+					{
+						
+					textPane_1.setText(""+2000000*0.5);
+					}
+					if(ai<600000)
+					{
+						textPane_1.setText("Cannot get German visa");
+						return;
+					}
+					if(ai>1200000&&ai<=2400000)
+					{
+						textPane_1.setText(""+2000000*0.75);
+					}
+					if(ai>2400000)
+					{
+						textPane_1.setText(""+2000000);
+					}
+				}
+				if(r2.isSelected()&&r13.isSelected())
+				{
+					if(ai>=600000&&ai<1200000)
+					{
+						
+					textPane_1.setText(""+2000000*0.7);
+					}
+					if(ai<600000)
+					{
+						textPane_1.setText("Cannot get German visa");
+						return;
+					}
+					if(ai>1200000&&ai<=2400000)
+					{
+						textPane_1.setText(""+2000000*0.9);
+					}
+					if(ai>2400000)
+					{
+						textPane_1.setText(""+2000000);
+					}
+				}
+				if(r3.isSelected()&&r11.isSelected())
+				{
+					if(ai<600000)
+					{
+						textPane_1.setText("Cannot get German visa");
+						return;
+					}
+						else
+						{
+						textPane_1.setText("0");
+						}
+				}
+				if(r3.isSelected()&&r12.isSelected())
+				{
+					if(ai>=600000&&ai<1200000)
+					{
+						
+					textPane_1.setText(""+100000*0.5);
+					}
+					if(ai<600000)
+					{
+						textPane_1.setText("Cannot get German visa");
+						return;
+					}
+					if(ai>1200000&&ai<=2400000)
+					{
+						textPane_1.setText(""+100000*0.75);
+					}
+					if(ai>2400000)
+					{
+						textPane_1.setText(""+100000);
+					}
+				}
+				if(r3.isSelected()&&r13.isSelected())
+				{
+					if(ai>=600000&&ai<1200000)
+					{
+						
+					textPane_1.setText(""+200000*0.7);
+					}
+					if(ai<600000)
+					{
+						textPane_1.setText("Cannot get German visa");
+						return;
+					}
+					if(ai>1200000&&ai<=2400000)
+					{
+						textPane_1.setText(""+200000*0.9);
+					}
+					if(ai>2400000)
+					{
+						textPane_1.setText(""+200000);
+					}
+				}
+				Random r = new Random();
+				int a = r.nextInt(10)+1;
+				if(a==1)
+				{
+					textPane_2.setText("Mr. Aryan");
+				}
+				if(a==2)
+				{
+					textPane_2.setText("Ms. Osho");
+				}
+				if(a==3)
+				{
+					textPane_2.setText("Ms. Aarya");
+				}
+				if(a==4)
+				{
+					textPane_2.setText("Mr. Utsav");
+				}
+				if(a==5)
+				{
+					textPane_2.setText("Mr. Neil");
+				}
+				if(a==6)
+				{
+					textPane_2.setText("Mr. Yash");
+				}
+				if(a==7)
+				{
+					textPane_2.setText("Mr. Manav");
+				}
+				if(a==8)
+				{
+					textPane_2.setText("Ms. Arti");
+				}
+				if(a==9)
+				{
+					textPane_2.setText("Mr. Aditya");
+				}
+				if(a==10)
+				{
+					textPane_2.setText("Mr. Sri Shiva");
+				}
+			}
+		});
+		btnNewButton.setBounds(177, 608, 114, 35);
+		frame.getContentPane().add(btnNewButton);
+		
+		JLabel lblNewLabel = new JLabel("German Education");
+		lblNewLabel.setForeground(Color.RED);
+		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 54));
+		lblNewLabel.setBounds(353, 13, 450, 65);
+		frame.getContentPane().add(lblNewLabel);
+		
+		JLabel lblAnnualIncome = new JLabel("Annual Income");
+		lblAnnualIncome.setFont(new Font("Tahoma", Font.PLAIN, 19));
+		lblAnnualIncome.setBounds(45, 333, 138, 40);
+		frame.getContentPane().add(lblAnnualIncome);
+		
+		
+		
+		JLabel lblRs = new JLabel("Rs.");
+		lblRs.setBounds(394, 348, 56, 16);
+		frame.getContentPane().add(lblRs);
+		
+		JLabel lblChoosePlan = new JLabel("Choose Course");
+		lblChoosePlan.setFont(new Font("Tahoma", Font.PLAIN, 23));
+		lblChoosePlan.setBounds(90, 101, 160, 30);
+		frame.getContentPane().add(lblChoosePlan);
+		
+		
+		JLabel lblRs_1 = new JLabel("Rs.");
+		lblRs_1.setBounds(481, 412, 56, 16);
+		frame.getContentPane().add(lblRs_1);
+		
+		JLabel lblTotalAmount = new JLabel("Estimated Annual Amount");
+		lblTotalAmount.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblTotalAmount.setBounds(26, 386, 215, 65);
+		frame.getContentPane().add(lblTotalAmount);
+		
+		JLabel lblNewLabel_1 = new JLabel("SOP/LOR Incharge");
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblNewLabel_1.setBounds(45, 502, 160, 25);
+		frame.getContentPane().add(lblNewLabel_1);
+		
+		
+		JButton btnNewButton_1 = new JButton("Go to DAAD ");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				try
+				{
+					
+					
+					String in = "https://www.daad.de/en/";
+					Desktop d = Desktop.getDesktop();
+					d.browse(new URI(in));
+					
+				}
+				catch(IOException e)
+				{
+					e.printStackTrace();
+					
+				}
+				catch(URISyntaxException e)
+				{
+					e.printStackTrace();
+					
+				}
+			}
+		});
+		JTextPane textPane_4 = new JTextPane();
+		textPane_4.setBounds(811, 299, 302, 22);
+		frame.getContentPane().add(textPane_4);
+		
+		textField = new JTextField();
+		textField.setBounds(811, 351, 302, 25);
+		frame.getContentPane().add(textField);
+		textField.setColumns(10);
+		btnNewButton_1.setBounds(871, 186, 178, 25);
+		frame.getContentPane().add(btnNewButton_1);
+		
+		JButton btnDownload = new JButton("Download");
+		btnDownload.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {   
+				try
+		       { 
+	        	String user = textPane_4.getText();
+	        	String user1 = textField.getText();
+	        	user1 = user1.concat(".html");
+	        	URL l = new URL(user);
+	        	File f = new File(user1);
+	        	FileUtils.copyURLToFile(l,f);
+	        	
+
+	       }
+	        catch(IOException e)
+	        {
+	        	e.printStackTrace();
+	        	
+	        	
+	        	
+	        }
+				
+			}
+		});
+		btnDownload.setBounds(901, 401, 97, 25);
+		frame.getContentPane().add(btnDownload);
+		
+		
+		
+		JLabel lblUrl = new JLabel("URL");
+		lblUrl.setBounds(747, 302, 56, 16);
+		frame.getContentPane().add(lblUrl);
+		
+		JLabel lblFileName = new JLabel("File Name ");
+		lblFileName.setBounds(714, 355, 89, 16);
+		frame.getContentPane().add(lblFileName);
+		
+		JButton btnExit = new JButton("Exit");
+		btnExit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				System.exit(0);
+			}
+		});
+		btnExit.setBounds(965, 564, 97, 25);
+		frame.getContentPane().add(btnExit);
+		
+		JButton btnReset = new JButton("Reset");
+		btnReset.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				bg.clearSelection();
+				bg1.clearSelection();
+				textPane.setText("");
+				textPane_1.setText("");
+				textPane_4.setText("");
+				textPane_2.setText("");
+				textField.setText("");
+			}
+		});
+		btnReset.setBounds(747, 564, 97, 25);
+		frame.getContentPane().add(btnReset);
+		
+		
+	}
+}
