@@ -1,0 +1,74 @@
+package firstever;
+
+
+
+import org.opencv.core.Core;
+import org.opencv.core.CvType;
+import org.opencv.core.Mat;
+import org.opencv.core.MatOfPoint;
+import org.opencv.core.MatOfRect;
+import org.opencv.core.Point;
+import org.opencv.core.Rect;
+import org.opencv.core.Scalar;
+import org.opencv.core.Size;
+import org.opencv.imgcodecs.Imgcodecs;
+import org.opencv.imgproc.Imgproc;
+import org.opencv.objdetect.CascadeClassifier;
+
+import java.awt.Graphics2D;
+import java.awt.geom.Ellipse2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.math.MathContext;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.imageio.ImageIO;
+public class FC1 {
+	public static void main(String args[]) throws IOException
+	{
+		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+	String img = "Images/download.jpg";
+	Mat src = Imgcodecs.imread(img);
+	
+	String xml = "lpbcascades,An_XML_FileWhichTellsHowToIdentifyA_ParticularFace/lbpcascade_frontalface.xml";
+	CascadeClassifier cc = new CascadeClassifier(xml);
+	MatOfRect mr = new MatOfRect();
+	cc.detectMultiScale(src, mr);
+	Rect rectCrop=null;
+	int radius=0;
+	Point center = null;
+	
+	int j = 1 ; 
+	System.out.println(String.format("The Detected faces are %d", mr.toArray().length));
+	for(Rect r : mr.toArray())
+	{
+		
+		//Imgproc.rectangle(src, new Point(r.x,r.y), new Point(r.x+r.width,r.y+r.height),new Scalar(0,0,123),3);
+		
+		rectCrop = new Rect(r.x, r.y, r.width, r.height);
+		
+		
+		
+		Mat crop = new Mat(src,rectCrop);
+		 
+	    Imgcodecs.imwrite("Images/cropimage"+j+".png",crop );
+	    File input = new File("Images/cropimage"+j+".png");
+	      BufferedImage i = ImageIO.read(input);
+	    int width = i.getHeight();
+	      BufferedImage o = new BufferedImage(width,width,BufferedImage.TYPE_INT_ARGB);
+	      Graphics2D g = o.createGraphics();
+	      g.setClip(new Ellipse2D.Float(0, 0, width, width));
+	      g.drawImage(i, 0, 0, width, width, null);
+	     
+	      ImageIO.write(o, "png", new File("Images/cropimage"+j+".png"));
+	      j++;
+	   
+	}
+	
+	
+	//Imgcodecs.imwrite("Images/exp.jpg",src);
+	}
+
+}
