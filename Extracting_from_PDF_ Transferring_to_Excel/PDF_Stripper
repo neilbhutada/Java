@@ -1,0 +1,49 @@
+package one;
+import java.io.File;
+import java.io.IOException;
+import org.apache.pdfbox.cos.COSDocument;
+import org.apache.pdfbox.io.RandomAccessFile;
+import org.apache.pdfbox.pdfparser.PDFParser;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.text.PDFTextStripper;
+public class PDF {
+	 PDFParser parser;
+     PDFTextStripper pdfStripper;
+     PDDocument pdDoc;
+    COSDocument cosDoc;
+
+    String Text;
+     String filePath;
+    File file;
+
+    public PDF() {
+
+    
+    }
+    public String toText() throws IOException {
+        pdfStripper = null;
+      pdDoc = null;
+        cosDoc = null;
+
+        file = new File(filePath);
+        parser = new PDFParser(new RandomAccessFile(file, "r")); // update for PDFBox V 2.0
+
+        parser.parse();
+        cosDoc = parser.getDocument();
+        pdfStripper = new PDFTextStripper();
+        pdDoc = new PDDocument(cosDoc);
+       // pdfStripper.setParagraphStart("मतदठरठचण ");
+        //pdfStripper.setParagraphEnd("मतदठरठचण" );
+     pdfStripper.setStartPage(0);
+        pdfStripper.setEndPage(pdDoc.getNumberOfPages());
+        Text = pdfStripper.getText(pdDoc);
+       
+        return Text;
+    }
+
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
+    }
+
+   
+}
